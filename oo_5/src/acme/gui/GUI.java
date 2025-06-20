@@ -1,21 +1,24 @@
 package acme.gui;
 import acme.business.*;
 import acme.data.StudentRepositoryArray;
+import acme.data.StudentRepositoryList;
+
+import java.util.List;
 
 public class GUI {
 
     // Prints the list of students (name: grade)
-    public static void printList(Student[] students, int studentCount ) {
+    public static void printList(List<Student> students ) {
         // Iterate only up to studentCount
-        for (int i = 0; i < studentCount; i++) {
-            System.out.println(students[i].getName() + " : " + students[i].getGrade());
+        for (Student student : students) {
+            System.out.println(student.getName() + " : " + student.getGrade());
         }
     }
 
     // --- Main method for demonstrating the functionality ---
     public static void main(String[] args) {
         // Create an instance with an initial capacity (e.g., 3 to see resizing happen early)
-        StudentManager school = new StudentManager(new StudentRepositoryArray(10));
+        StudentManager school = new StudentManager(new StudentRepositoryList());
 
         System.out.println("Adding students...");
         school.addStudent(new Student("Luiz", 5.0));
@@ -25,7 +28,7 @@ public class GUI {
         school.addStudent(new Student("Joao", 1.0));
 
         System.out.println("\nInitial List (after adding, might have been resized):");
-        printList(school.getOrderedStudents(),school.getStudentCount());
+        printList(school.getOrderedStudents() );
 
         System.out.println("-------");
 
@@ -33,7 +36,7 @@ public class GUI {
         double averageGrade = school.calculateAverage();
 
 
-        printList(school.getOrderedStudents(),school.getStudentCount());
+        printList(school.getOrderedStudents() );
         System.out.println(averageGrade);
 
 

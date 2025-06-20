@@ -2,6 +2,9 @@ package acme.data;
 
 import acme.business.Student;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class StudentRepositoryArray implements StudentRepository {
 
     private Student[] students; // The fixed-size array to store students
@@ -16,13 +19,18 @@ public class StudentRepositoryArray implements StudentRepository {
         students[studentCount] = student;
         studentCount++;
     }
-    public Student findById(int id){
+    public Student findById(Integer id){
         return students[id];
     }
-    public Student[] findAll(){
-        return students;
+    public List<Student> findAll(){
+        //System.out.println(students);
+        return List.of(Arrays.copyOfRange(students, 0, studentCount-1));
     }
-    public int count(){
+    public List<Student> findAllByOrderByName(){
+        return this.findAll();
+    }
+
+    public Integer count(){
         return studentCount;
     }
 

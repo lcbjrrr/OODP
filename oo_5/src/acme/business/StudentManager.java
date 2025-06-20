@@ -1,5 +1,8 @@
 package acme.business;
 import acme.data.StudentRepository;
+
+import java.util.List;
+
 public class StudentManager {
     private StudentRepository students;
     // Constructor: Initializes the array with a specified initial capacity
@@ -27,7 +30,7 @@ public class StudentManager {
         }
         return totalGrade / students.count();
     }
-    public Student[] getOrderedStudents(){
+    public List<Student> getOrderedStudents(){
         return students.findAll();
     }
     public int getStudentCount() {

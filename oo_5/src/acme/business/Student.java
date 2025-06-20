@@ -1,6 +1,8 @@
 package acme.business;
 
-public class Student {
+import acme.data.StudentRepository;
+
+public class Student implements Comparable<Student> {
     // Private instance variables (fields) to store student data
     private String name; // Corresponds to __nome
     private double grade; // Corresponds to __nota (using double for potential decimal grades)
@@ -10,6 +12,11 @@ public class Student {
         this.name = name; // 'this.name' refers to the instance variable, 'name' refers to the parameter
         this.grade = grade;
     }
+
+    public int compareTo(Student o) {
+        return this.name.compareTo(o.name);
+    }
+
 
     // Getter for 'name' (equivalent to Python's @property for 'nome')
     public String getName() {
