@@ -1,14 +1,17 @@
 package acme.business;
 import acme.business.exceptions.StudentAlreadyEnrolledException;
 import acme.data.StudentRepository;
+import acme.integration.ExternalPartnerAPI;
 
 import java.util.List;
 
 public class StudentManager {
     private StudentRepository students;
+    private ExternalPartnerAPI integration;
     // Constructor: Initializes the array with a specified initial capacity
-    public StudentManager(StudentRepository students) {
+    public StudentManager(StudentRepository students,ExternalPartnerAPI integration) {
          this.students = students ;
+         this.integration = integration;
     }
 
 
@@ -22,6 +25,7 @@ public class StudentManager {
         }
 
     }
+
     public boolean isAlreadyEnrolled(String studentName) {
         Student student= students.findByName(studentName);
         if (student == null) {
@@ -53,6 +57,14 @@ public class StudentManager {
     }
     public int getStudentCount() {
         return students.count();
+    }
+
+    public void enrollStudentsFromPartner() throws StudentAlreadyEnrolledException{
+        List<Student> students = integration.getStudents();
+        for (Student s : students) {
+            addStudent(s);
+        }
+
     }
 }
 

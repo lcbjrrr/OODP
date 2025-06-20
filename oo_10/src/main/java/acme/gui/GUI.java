@@ -3,6 +3,7 @@ import acme.business.*;
 import acme.business.exceptions.StudentAlreadyEnrolledException;
 import acme.data.StudentRepositoryDB;
 import acme.data.StudentRepositoryList;
+import acme.integration.FBIExternalPartnerAPI;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class GUI {
     // --- Main method for demonstrating the functionality ---
     public static void main(String[] args) {
         // Create an instance with an initial capacity (e.g., 3 to see resizing happen early)
-        StudentManager school = new StudentManager(new StudentRepositoryDB());
+        StudentManager school = new StudentManager(new StudentRepositoryDB(),new FBIExternalPartnerAPI());
 
         System.out.println("Adding students...");
         try {school.addStudent(new Student("Luiz", 5.0));
@@ -35,15 +36,14 @@ public class GUI {
 
         System.out.println("\nInitial List (after adding, might have been resized):");
         printList(school.getOrderedStudents() );
-
         System.out.println("-------");
-
         // Sort students and calculate the average grade
         double averageGrade = school.calculateAverage();
+        System.out.println("Enrolling partner students...");
 
-
+        try {school.enrollStudentsFromPartner();
+        } catch (StudentAlreadyEnrolledException e) {System.out.println(e.getName()+" already enrolled!");}
         printList(school.getOrderedStudents() );
-        System.out.println(averageGrade);
 
 
     }
