@@ -1,9 +1,11 @@
-public class Square extends Shape {
+package shapes;
+
+public class Square implements Shape {
     double side;
     public Square(double side) {
         this.side = side;
     }
-    double area(){
+    public double area(){
         return side*side;
     }
 }
