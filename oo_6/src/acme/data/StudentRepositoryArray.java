@@ -15,6 +15,10 @@ public class StudentRepositoryArray implements StudentRepository {
         studentCount = 0;
     }
 
+    public Student findByName(String name){
+        return null;
+    }
+
     public void save(Student student){
         students[studentCount] = student;
         studentCount++;

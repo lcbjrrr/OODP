@@ -1,5 +1,6 @@
 package acme.gui;
 import acme.business.*;
+import acme.business.exceptions.StudentAlreadyEnrolledException;
 import acme.data.StudentRepositoryArray;
 import acme.data.StudentRepositoryList;
 
@@ -21,11 +22,16 @@ public class GUI {
         StudentManager school = new StudentManager(new StudentRepositoryList());
 
         System.out.println("Adding students...");
-        school.addStudent(new Student("Luiz", 5.0));
-        school.addStudent(new Student("Ze", 7.0));
-        school.addStudent(new Student("Mane", 3.0)); // This might trigger a resize if initial capacity was 3
-        school.addStudent(new Student("Maria", 2.0)); // This will trigger a resize if initial capacity was 3
-        school.addStudent(new Student("Joao", 1.0));
+        try {school.addStudent(new Student("Luiz", 5.0));
+        }catch (StudentAlreadyEnrolledException e){System.out.println(e.getName()+" already enrolled!");}
+        try{school.addStudent(new Student("Luiz", 7.0));
+        }catch (StudentAlreadyEnrolledException e){System.out.println(e.getName()+" already enrolled!");}
+        try{school.addStudent(new Student("Mane", 3.0)); // This might trigger a resize if initial capacity was 3
+        }catch (StudentAlreadyEnrolledException e){System.out.println(e.getName()+" already enrolled!");}
+        try{school.addStudent(new Student("Maria", 2.0)); // This will trigger a resize if initial capacity was 3
+        }catch (StudentAlreadyEnrolledException e){System.out.println(e.getName()+" already enrolled!");}
+        try{school.addStudent(new Student("Joao", 1.0));
+        }catch (StudentAlreadyEnrolledException e){System.out.println(e.getName()+" already enrolled!");}
 
         System.out.println("\nInitial List (after adding, might have been resized):");
         printList(school.getOrderedStudents() );

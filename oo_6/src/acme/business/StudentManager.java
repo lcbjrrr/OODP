@@ -1,4 +1,5 @@
 package acme.business;
+import acme.business.exceptions.StudentAlreadyEnrolledException;
 import acme.data.StudentRepository;
 
 import java.util.List;
@@ -13,8 +14,26 @@ public class StudentManager {
 
 
     // Adds a acme.business.Student object to the registry
-    public void addStudent(Student student) {
-         students.save(student);
+    public void addStudent(Student student) throws StudentAlreadyEnrolledException {
+        if(!isAlreadyEnrolled(student.getName()) ){
+            students.save(student);
+        }else{
+            throw new StudentAlreadyEnrolledException(student.getName());
+        }
+
+    }
+
+    public boolean isAlreadyEnrolled(String studentName) {
+        Student student= students.findByName(studentName);
+        if (student == null) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    Student findByName(String name) {
+        return students.findByName(name);
     }
 
     // Gets a acme.business.Student object at a specific position

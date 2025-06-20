@@ -33,4 +33,14 @@ public class StudentRepositoryList implements StudentRepository {
                 .sorted()
                 .collect(Collectors.toList());
     }
+
+    public Student findByName(String name){
+        Student student = null;
+        for(Student s: students){
+            if(s.getName().equals(name)){
+                student = s;
+            }
+        }
+        return student;
+    }
 }

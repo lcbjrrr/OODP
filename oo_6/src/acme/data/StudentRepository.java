@@ -9,4 +9,5 @@ public interface StudentRepository {
     public List<Student> findAll();
     public Integer count();
     public List<Student> findAllByOrderByName();
+    public Student findByName(String name);
 }
